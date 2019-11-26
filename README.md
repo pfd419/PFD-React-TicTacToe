@@ -1,8 +1,8 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
-
 To View a demo of this on CodePen, navigate to https://codepen.io/pfd419/pen/wvvOLKP
+
+## Available Scripts
 
 In the project directory, you can run:
 
