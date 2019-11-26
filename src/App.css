@@ -1,22 +1,13 @@
-.App {
+.banner {
+  height: 60px;
+  font-size: 2em;
   text-align: center;
 }
-
-.App-logo {
-  height: 40vmin;
+.banner .sub-banner {
+  font-size: 0.4em;
+  font-style: italic;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
 
-.App-link {
-  color: #09d3ac;
-}
+
+

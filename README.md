@@ -2,6 +2,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Available Scripts
 
+To View a demo of this on CodePen, navigate to https://codepen.io/pfd419/pen/wvvOLKP
+
 In the project directory, you can run:
 
 ### `npm start`
