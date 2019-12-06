@@ -16,7 +16,7 @@ const defaultState = {
 const reducer = (state = defaultState, action) => {
     switch (action.type) {
       case statics.RESET:
-        return defaultState;
+        return { ...defaultState, numPlayers: state.numPlayers};
       case statics.NUMPLAYERS:
         return { ...state, numPlayers: parseInt(action.value) };
       case statics.PIECESELECTION:
