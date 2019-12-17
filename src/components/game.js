@@ -6,6 +6,7 @@ import { statics } from '../statics';
 import moveApi from '../api/move';
 
 import './game.css';
+import './loadingMask.css';
 
 
 const mapStateToProps = state => ({ ...state });
@@ -36,13 +37,22 @@ const DrawWinningLine = props => {
     return <div>{line}</div>;
 };
 
+const LoadingMask = props => {
+    return (
+        <div class="loader" style={{ opacity: props.computerMove ? "50%" : "0%" }}>
+            <div class="loader-wheel"></div>
+        </div>
+    );
+}
+
 const TurnIndicator = props => {
     const hasWinner = props.winningPiece || props.numMoves === 9;
     const isTie = props.numMoves === 9;
-    const isWinner = props.numPlayers === 1 && props.turn === 0;
+    const computerMove = !hasWinner && props.numPlayers === 1 && props.turn === 1;
+    const yourMove = props.numPlayers === 1 && props.turn === 0;
 
     const tieText = "Tie!!! ";
-    const winnerText = isWinner ? "You Win!!! " : props.winningPiece + " Wins!!! ";
+    const winnerText = yourMove ? "You Win!!! " : props.winningPiece + " Wins!!! ";
     const scoreText = "Score: " + props.score[0] + "-" + props.score[1] +
         ". Click to continue...";
     const winIndicator = <span>
@@ -50,15 +60,22 @@ const TurnIndicator = props => {
         {scoreText}
     </span>;
     const moveIndicator = <span>
-        It is {props.players[props.turn]}'s turn {isWinner ? "(You)" : ""}
+        It is {props.players[props.turn]}'s turn {yourMove ? "(You)" : ""}
     </span>
 
     return (
         <div className="turnIndicator">
+            <LoadingMask computerMove={computerMove} />
             {hasWinner ? winIndicator : moveIndicator}
         </div>
     );
 };
+
+const Square = props => {
+    return (<div id={props.id} onClick={props.moveHandler}>
+        {props.board[props.id]}
+    </div>)
+}
 
 const Board = props => {
     return (
@@ -66,58 +83,40 @@ const Board = props => {
             <tbody>
                 <tr>
                     <td>
-                        <div id="0" onClick={props.moveHandler}>
-                            {props.board[0]}
-                        </div>
+                        <Square id="0" board={props.board} moveHandler={props.moveHandler}/>
                     </td>
                     <td className="vert">
-                        <div id="1" onClick={props.moveHandler}>
-                            {props.board[1]}
-                        </div>
+                        <Square id="1" board={props.board} moveHandler={props.moveHandler}/>
                     </td>
                     <td>
-                        <div id="2" onClick={props.moveHandler}>
-                            {props.board[2]}
-                        </div>
+                        <Square id="2" board={props.board} moveHandler={props.moveHandler}/>
                     </td>
                 </tr>
                 <tr>
                     <td className="hori">
-                        <div id="3" onClick={props.moveHandler}>
-                            {props.board[3]}
-                        </div>
+                        <Square id="3" board={props.board} moveHandler={props.moveHandler}/>
                     </td>
                     <td className="vert hori">
-                        <div id="4" onClick={props.moveHandler}>
-                            {props.board[4]}
-                        </div>
+                        <Square id="4" board={props.board} moveHandler={props.moveHandler}/>
                     </td>
                     <td className="hori">
-                        <div id="5" onClick={props.moveHandler}>
-                            {props.board[5]}
-                        </div>
+                        <Square id="5" board={props.board} moveHandler={props.moveHandler}/>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <div id="6" onClick={props.moveHandler}>
-                            {props.board[6]}
-                        </div>
+                        <Square id="6" board={props.board} moveHandler={props.moveHandler}/>
                     </td>
                     <td className="vert">
-                        <div id="7" onClick={props.moveHandler}>
-                            {props.board[7]}
-                        </div>
+                        <Square id="7" board={props.board} moveHandler={props.moveHandler}/>
                     </td>
                     <td>
-                        <div id="8" onClick={props.moveHandler}>
-                            {props.board[8]}
-                        </div>
+                        <Square id="8" board={props.board} moveHandler={props.moveHandler}/>
                     </td>
                 </tr>
             </tbody>
         </table>
-    ); 
+    );
 }
 
 const Game = props => {
@@ -156,7 +155,7 @@ const Game = props => {
         <div>
             {props.winningPiece && <DrawWinningLine winningCombo={props.winningCombo} />}
             <TurnIndicator {...props} />
-            <Board board={props.board} moveHandler={moveHandler}/>
+            <Board board={props.board} moveHandler={moveHandler} />
         </div>
     );
 };
